@@ -4,11 +4,12 @@ import Product from "./Product";
 import AddProduct from "./Product/AddForm";
 import axios from "axios";
 import { useEffect } from "react";
+import styled from "styled-components";
 
 
 
 
-function Home() {
+function Home({className}) {
     const [products, setProducts] = useState([]);
     // getProducts();
     let currentProductId = 9;
@@ -39,7 +40,7 @@ function Home() {
     }
 
     return (
-        <Fragment>
+        <div className={className}>
             {
                 products.length > 0 ? (
                     <ul className="Home__products">
@@ -53,10 +54,18 @@ function Home() {
             }
             <AddProduct addProduct={addProduct} />
 
-        </Fragment>
+        </div>
     )
 
 }
 
-export default Home
+export default styled(Home)`
+  .Home__products {
+    display: flex;
+    flex-wrap: wrap;
 
+    list-style-type: none;
+    padding: 0;
+    margin: 0 -12px;
+  }
+`;
