@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-function AddProduct({addProduct}) {
+function AddForm({addProduct}) {
     const [name, setName] = useState("");
     const [imageURL, setImageURL] = useState("");
     const [type, setType] = useState("");
@@ -38,4 +38,4 @@ function AddProduct({addProduct}) {
     )
 }
 
-export default AddProduct;
+export default AddForm;

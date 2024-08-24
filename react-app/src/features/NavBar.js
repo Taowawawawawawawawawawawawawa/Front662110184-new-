@@ -1,12 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 function NavBar({className}) {
     return (
         <header className={className}>
-  <a href="/" className="brand">
+  <Link to="/" className="brand">
     Trendie
-  </a>
-  <a href="/create-product">Create product</a>
+  </Link>
+  <Link to="/create-product">Create product</Link>
 </header>
     )
 }
