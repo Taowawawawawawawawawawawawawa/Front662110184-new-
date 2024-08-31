@@ -1,5 +1,9 @@
 import React, { Fragment, useState } from "react";
-function AddForm({addProduct}) {
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { addProduct } from "./actions";
+
+function AddForm() {
     const [name, setName] = useState("");
     const [imageURL, setImageURL] = useState("");
     const [type, setType] = useState("");
@@ -8,9 +12,13 @@ function AddForm({addProduct}) {
         setter(value);
     };
 
-    const onSubmit = (event) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    function onSubmit(event) {
         event.preventDefault();
-        addProduct({ name, type, imageURL });
+        dispatch(addProduct({ name, type, imageURL }));
+        navigate('/');
     }
 
     return (
@@ -19,17 +27,17 @@ function AddForm({addProduct}) {
             <form id="create-form" onSubmit={onSubmit}>
                 <div className="input-group">
                     <label htmlFor="name">Name</label>
-                    <input name="name" type="text" id="name" onChange={(event) => onChange(setName, event.target.value)}/>
+                    <input name="name" type="text" id="name" onChange={(event) => onChange(setName, event.target.value)} />
                 </div>
 
                 <div className=" input-group">
                     <label htmlFor="imageURL">Image URL</label>
-                    <input name="imageURL" type="text" id="imageURL" onChange={(event) => onChange(setImageURL, event.target.value)}/>
+                    <input name="imageURL" type="text" id="imageURL" onChange={(event) => onChange(setImageURL, event.target.value)} />
                 </div>
 
                 <div className=" input-group">
                     <label htmlFor="type">Type</label>
-                    <input name="type" type="text" id="type" onChange={(event) => onChange(setType, event.target.value)}/>
+                    <input name="type" type="text" id="type" onChange={(event) => onChange(setType, event.target.value)} />
                 </div>
 
                 <button type="submit">Add product</button>

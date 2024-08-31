@@ -1,19 +1,36 @@
 import React, { Fragment, useState } from "react";
 import { useParams } from "react-router-dom";
-function UpdateForm({ addProduct }) {
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
+import { updateProduct,deleteProduct } from "./actions";
+
+function UpdateForm() {
 
     const { id } = useParams();
-    console.log(id);
+    const products = useSelector((state) => state.products);
+    const product = products.find((product) => product.id === Number(id));
 
-    const [name, setName] = useState("");
-    const [imageURL, setImageURL] = useState("");
-    const [type, setType] = useState("");
+    const [name, setName] = useState(product.name);
+    const [type, setType] = useState(product.type);
+    const [imageURL, setImageURL] = useState(product.imageURL);
 
     const onChange = (setter, value) => {
         setter(value);
     };
 
-    
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const onSubmit = (event) => {
+        event.preventDefault();
+        dispatch(updateProduct({ id: product.id, name, type, imageURL }));
+        navigate('/');
+    };
+
+    const onDelete = () => {
+        dispatch(deleteProduct({ id: product.id }));
+        navigate('/');
+      };
 
     // useEffect(() => {
     //     async function getProducts() {
@@ -46,10 +63,10 @@ function UpdateForm({ addProduct }) {
                     <input name="type" type="text" id="type" value={type} onChange={(event) => onChange(setType, event.target.value)} />
                 </div>
 
-                <button type="button" className="UpdateForm__delete-button">
+                <button type="button" className="UpdateForm__delete-button" onClick={onDelete()}>
                     Delete restaurant
                 </button>
-                <button type="submit">Update product</button>
+                <button type="submit" onClick={onSubmit()}>Update product</button>
             </form>
         </>
     )

@@ -8,19 +8,21 @@ import Addform from "./features/Product/AddForm";
 import Updateform from "./features/Product/UpdateForm";
 import axios from "axios";
 import { useEffect } from "react";
-import { useState } from "react";
+import { fetchProducts } from './features/Product/actions';
+import { useSelector, useDispatch } from 'react-redux';
 function App() {
 
-  const [products, setProducts] = useState([]);
+  const products = useSelector((state) => state.products);
   // getProducts();
   // let currentProductId = 9;
 
+  const dispatch = useDispatch();
   useEffect(() => {
     async function getProducts() {
       const products = await axios.get(
         'https://apimocha.com/front184/products'
       );
-      setProducts(products.data);
+      dispatch(fetchProducts(products.data));
     }
 
     getProducts();
